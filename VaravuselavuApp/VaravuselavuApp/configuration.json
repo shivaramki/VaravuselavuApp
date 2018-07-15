@@ -1,0 +1,13 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnectionString": "vmaVX7SNGuRC+uBSAks8Mq95glUr9z8cWO8pBnbis7vtnmSCui9wFCS3RrNx/Bi/RK5unoAGIFdphyxv0BPlkRp3JDSNgseOHX4jZ+zJs5GnEsd8nwpS271KpQdwwoURNxfkeXlO84lAlOD2aoAeYNSZx8ZLJvVr8wr3KLgISNA="
+  },
+  "Messages": {
+    "InternalServerError": "Internal server Error,Please contact the administartor"
+  },
+  "EmailConfigurations": {
+    "FromAddress": "wNDENZkj3CXxx5a59S1NNpx0hu/i8GEd1FeZkUvSfTsLlaKzz2AtcgMLtlCuuzsk",
+    "Username": "wNDENZkj3CXxx5a59S1NNpx0hu/i8GEd1FeZkUvSfTsLlaKzz2AtcgMLtlCuuzsk",
+    "Password": "tYcAopU4laqunesWNHoKY14EJS0fTwSECIVu9DbUFw8="
+  }
+}

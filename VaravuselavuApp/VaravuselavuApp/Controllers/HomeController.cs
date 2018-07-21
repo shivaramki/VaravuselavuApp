@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VaravuselavuStandard.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
-        [Route("health")]
+		[Authorize]
+		[Route("health")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -21,5 +22,17 @@ namespace VaravuselavuStandard.Controllers
                 error = new List<String>()
             });
         }
-    }
+
+		[Route("status")]
+		[HttpGet]
+		public IActionResult AppStatusCheck()
+		{
+			return Json(new
+			{
+				success = true,
+				data = "",
+				error = new List<String>()
+			});
+		}
+	}
 }

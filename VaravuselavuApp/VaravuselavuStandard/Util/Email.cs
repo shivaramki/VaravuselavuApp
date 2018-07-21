@@ -6,7 +6,7 @@ namespace VaravuselavuStandard.Util
 {
     public static class Email
     {
-        public static Boolean Send(string fromAddress,String toAddress, String username,string password,string appPassword,string appUsername )
+        public static Boolean Send(string fromAddress,String toAddress, String username,string password,string appPassword,string appUsername,string subject,string bodyContent)
         {
             Boolean isSuccess = false;
            
@@ -16,10 +16,10 @@ namespace VaravuselavuStandard.Util
                 string FromAdressTitle = "Email from Varavuselavuapp";
                 string ToAddress = toAddress;
                 string ToAdressTitle = "Varavuselavuapp";
-                string Subject = "Login credentials for Varavuselavuapp";
-                string BodyContent = "The following is the username and password for Varavuselavu app <br/> <b>Username:</b>" + appUsername + "<br/>" + "<b>Password:</b>" + appPassword;
+				string Subject = subject;
+                string BodyContent = bodyContent;
 
-                string SmtpServer = "smtp.gmail.com";
+				string SmtpServer = "smtp.gmail.com";
                 int SmtpPortNumber = 587;
 
                 var mimeMessage = new MimeMessage();

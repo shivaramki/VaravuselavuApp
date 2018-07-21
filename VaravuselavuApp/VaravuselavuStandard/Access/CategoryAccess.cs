@@ -24,7 +24,7 @@ namespace VaravuselavuStandard.Access
             if (CategoryExists(entity)==true)
                 _errors.Add("Category already exists, cannot duplicate");
 
-            return Convert.ToBoolean(_errors.Count == 0);
+            return _errors.Count == 0;
         }
 
         protected override bool ValidateMandatory(Category entity)
@@ -32,7 +32,7 @@ namespace VaravuselavuStandard.Access
             if (entity.Name == string.Empty)
                 _errors.Add("Category name should not be empty");
 
-            return Convert.ToBoolean(_errors.Count == 0);
+            return _errors.Count == 0;
         }
 
         protected override bool ValidateUpdate(Category entity)
@@ -40,7 +40,7 @@ namespace VaravuselavuStandard.Access
             if (CategoryExists(entity) == true)
                 _errors.Add("Category with that name exists already, correct category name");
 
-            return Convert.ToBoolean(_errors.Count == 0);
+            return _errors.Count == 0;
        }
 
         public bool CategoryExists(Category entity)

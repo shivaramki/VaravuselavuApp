@@ -21,7 +21,7 @@ namespace VaravuselavuStandard.Access
 
         protected override bool ValidateInsert(Expenses entity)
         {
-            return Convert.ToBoolean(_errors.Count == 0);
+            return _errors.Count == 0;
         }
 
         protected override bool ValidateMandatory(Expenses entity)
@@ -41,12 +41,12 @@ namespace VaravuselavuStandard.Access
             if (!entity.ExpenseDate.HasValue)
                 _errors.Add("Please provide the expense date");
 
-            return Convert.ToBoolean(_errors.Count == 0);
+            return _errors.Count == 0;
         }
 
         protected override bool ValidateUpdate(Expenses entity)
         {
-            return Convert.ToBoolean(_errors.Count == 0);
+            return _errors.Count == 0;
         }
 
         public IEnumerable<Expenses> GetAll()

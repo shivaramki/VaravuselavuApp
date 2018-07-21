@@ -28,6 +28,7 @@ namespace VaravuselavuStandard.Access
 			if (appUserAccess.VerifyUser(ref appUser))
 			{
 				UpdatePassword(entity.EmailId, entity.NewPassword);
+				TriggerEmail(appUser.EmailId,entity.NewPassword, appUser.Username);
 				isSuccess = true;
 			}
 			else
@@ -55,6 +56,18 @@ namespace VaravuselavuStandard.Access
 			return isUpdateSuccess;
 		}
 
+		public Boolean TriggerEmail(String toAddress, String userPassword, string username)
+		{
+			var emailSubject = "Updated password !!!";
+			var bodyContent = "The updated password for the Varavuselavu app is <br/> <b>Username:</b>" + username + "<br/>" + "<b>Password:</b>" + userPassword + "<br/>" + $"Application URL: <a href = \"http:www.varavuselavu.xyz\">VaravuselavuApp</a>";
+
+			return Email.Send(
+				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.FromAddress, Constants.KEY),
+				toAddress,
+				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.FromAddress, Constants.KEY),
+				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.Password, Constants.KEY), userPassword, username, emailSubject, bodyContent);
+		}
+
 		protected override bool ValidateMandatory(ChangePassword entity)
 		{
 			if (!entity.EmailId.isValidEmail())
@@ -66,7 +79,10 @@ namespace VaravuselavuStandard.Access
 			if (entity.NewPassword.isNullOrEmpty())
 				_errors.Add("New password cannot be empty");
 
-			return Convert.ToBoolean(_errors.Count == 0);
+			if (entity.OldPassword == entity.NewPassword)
+				_errors.Add("Old password and new password cannot be same");
+
+			return _errors.Count == 0;
 		}
 	}
 }

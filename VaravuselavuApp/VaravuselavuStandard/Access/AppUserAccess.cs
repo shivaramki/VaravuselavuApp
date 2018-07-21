@@ -20,12 +20,13 @@ namespace VaravuselavuStandard.Access
 
 		protected override bool UserInsert(AppUser entity)
 		{
+			var hashLessPassword = entity.Password;
 			entity.Password = Helpers.HashPassword(entity.Password);
 			entity.Salt = Helpers.salt;
 
 			_connection.Insert(entity);
 
-			return TriggerEmail(entity.EmailId, entity.Password, entity.Username);
+			return TriggerEmail(entity.EmailId, hashLessPassword, entity.Username);
 		}
 
 		protected override bool UserUpdate(AppUser entity)
@@ -35,7 +36,7 @@ namespace VaravuselavuStandard.Access
 
 		protected override bool ValidateInsert(AppUser entity)
 		{
-			return Convert.ToBoolean(_errors.Count == 0);
+			return _errors.Count == 0;
 		}
 
 		protected override bool ValidateMandatory(AppUser entity)
@@ -53,22 +54,25 @@ namespace VaravuselavuStandard.Access
 			if (entity.AdvanceAmount == 0)
 				_errors.Add("Amount cannot be zero");
 
-			return Convert.ToBoolean(_errors.Count == 0);
+			return _errors.Count == 0;
 		}
 
 		protected override bool ValidateUpdate(AppUser entity)
 		{
-			return Convert.ToBoolean(_errors.Count == 0);
+			return _errors.Count == 0;
 		}
 
 		public Boolean TriggerEmail(String toAddress, String userPassword, string username)
 		{
 
+			var emailSubject = "Login credentials for Varavuselavuapp";
+			var bodyContent = "The following is the username and password for Varavuselavu app <br/> <b>Username:</b>" + username + "<br/>" + "<b>Password:</b>" + userPassword + "<br/>" + $"Application URL: <a href = \"http:www.varavuselavu.xyz\">VaravuselavuApp</a>";
+
 			return Email.Send(
 				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.FromAddress, Constants.KEY),
 				toAddress,
 				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.FromAddress, Constants.KEY),
-				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.Password, Constants.KEY), userPassword, username);
+				CrytoHelper.DecryptString(_appConfiguration.EmailConfigurations.Password, Constants.KEY), userPassword, username, emailSubject, bodyContent);
 		}
 
 		public IEnumerable<AppUser> getAllUsers()

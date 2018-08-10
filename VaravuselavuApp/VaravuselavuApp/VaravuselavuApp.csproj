@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <RuntimeIdentifiers>win81-x86;ubuntu.18.04-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.4" />
@@ -15,8 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="VaravuselavuStandard">
-      <HintPath>..\VaravuselavuStandard\bin\Debug\netstandard2.0\VaravuselavuStandard.dll</HintPath>
-      <Private>true</Private>
+      <HintPath>Lib\netstandard2.0\VaravuselavuStandard.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

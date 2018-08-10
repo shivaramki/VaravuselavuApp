@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using System.Globalization;
 using VaravuselavuStandard.Util;
 
 
@@ -31,7 +29,8 @@ namespace VaravuselavuStandard
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                });
+					options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.RoundtripKind;
+				});
             services.AddOptions();
             services.Configure<AppConfiguration>(Configuration);
             services.AddScoped<ExpenseConnection>();
@@ -51,7 +50,17 @@ namespace VaravuselavuStandard
             }
 
             app.UseStaticFiles();
-            app.UseAuthentication();
+
+			app.UseForwardedHeaders(new ForwardedHeadersOptions
+			{
+				ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+			});
+
+			var cultureInfo = new CultureInfo("de-DE");
+			CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+			CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+			app.UseAuthentication();
             app.UseMvc();
         }
     }
